@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bomb Drop Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #282c34;
+        }
+
+        .game-container {
+            position: relative;
+            width: 300px;
+            height: 500px;
+            border: 2px solid #fff;
+            overflow: hidden;
+        }
+
+        .ground {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .bomb, .explode {
+            position: absolute;
+            width: 50px;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: top 0.5s ease-in;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .score {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <img src="ground.jpg" class="ground" onclick="dropBomb()">
+        <img src="bomb.jpg" class="bomb hidden" id="bomb">
+        <img src="explode.jpg" class="explode hidden" id="explode">
+        <div class="score" id="score">Score: 0</div>
+    </div>
+
+    <script>
+        let score = 0;
+
+        function dropBomb() {
+            const bomb = document.getElementById('bomb');
+            const explode = document.getElementById('explode');
+            const scoreDisplay = document.getElementById('score');
+
+            // 초기화 및 bomb 표시
+            bomb.classList.remove('hidden');
+            explode.classList.add('hidden');
+            bomb.style.top = '-50px';
+
+            // bomb 애니메이션 설정
+            setTimeout(() => {
+                bomb.style.top = '400px'; // 폭탄이 내려가는 위치
+            }, 50);
+
+            // 폭발 처리
+            setTimeout(() => {
+                bomb.classList.add('hidden');
+                explode.classList.remove('hidden');
+                score++;
+                scoreDisplay.textContent = `Score: ${score}`;
+            }, 600); // 폭발 타이밍 조정
+        }
+    </script>
+</body>
+</html>
